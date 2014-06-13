@@ -6,20 +6,17 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-public class ConfigManager
-{
-  public static ConfigManager instance = new ConfigManager();
+public class ConfigManager {
+public static ConfigManager instance = new ConfigManager();
   Plugin p;
   FileConfiguration homes;
   File homefile;
   
-  public static ConfigManager getInstance()
-  {
+  public static ConfigManager getInstance() {
     return instance;
   }
   
-  public void setup(Plugin p)
-  {
+  public void setup(Plugin p) {
     this.p = p;
     if (!p.getDataFolder().exists()) {
       p.getDataFolder().mkdir();
@@ -27,24 +24,20 @@ public class ConfigManager
     this.homefile = new File(p.getDataFolder(), "data.yml");
     this.homes = YamlConfiguration.loadConfiguration(this.homefile);
     if (!this.homefile.exists()) {
-      try
-      {
+      try {
         this.homefile.createNewFile();
       }
-      catch (IOException e)
-      {
+      catch (IOException e) {
         System.out.println("Could not create data file!");
       }
     }
   }
   
-  public void delete()
-  {
+  public void delete() {
     this.homefile.delete();
   }
   
-  public void clear()
-  {
+  public void clear() {
     for (String key : getConfig().getKeys(false)) {
       this.homes.set(key, null);
     }
@@ -56,10 +49,8 @@ public class ConfigManager
     return this.homes;
   }
   
-  public void saveConfig()
-  {
-    try
-    {
+  public void saveConfig() {
+    try {
       this.homes.save(this.homefile);
     }
     catch (IOException e)
@@ -68,8 +59,7 @@ public class ConfigManager
     }
   }
   
-  public PluginDescriptionFile getDescription()
-  {
+  public PluginDescriptionFile getDescription() {
     return this.p.getDescription();
   }
 }
